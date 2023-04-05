@@ -1,0 +1,99 @@
+#home {
+  background-color: rgb(0, 101, 219);
+  background: linear-gradient(90deg, rgb(0,101,219) 50%, rgba(0,212,255, 1) 100%);
+  min-height: 500px;
+}
+
+.We{
+  font-size: xx-large;
+  border-block: 5px;
+}
+
+#connection{
+  transition: all 0.5s ease;
+  height: 450px;
+}
+
+#connection:hover{
+  cursor: pointer;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0, .15);
+}
+
+#prices{
+  transition: all 0.5s ease;
+  height: 450px;
+}
+
+#prices:hover{
+  cursor: pointer;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0, .15);
+}
+
+#delivery{
+  transition: all 0.5s ease;
+  height: 450px;
+}
+
+#delivery:hover{
+  cursor: pointer;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0, .15);
+}
+
+#footer{
+  background-color: rgb(0, 101, 219);
+
+}
+
+.form{
+  background-color: rgb(0, 101, 219);
+  background: linear-gradient(90deg, rgb(0,101,219) 30%, rgba(0,212,255,1) 100%);
+}
+
+body {
+  background-color: #f2f2f2;
+}
+.dashboard {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  box-shadow: 10px;
+}
+h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+.card-dash {
+  /* position: fixed; */
+  margin-bottom: 20px;
+  padding: 20px;
+  /* margin-top: 20px; */
+}
+
+.inventory {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+.inv {
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.order-form {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
