@@ -44,5 +44,5 @@ export default function UserDetails() {
     });
 }, []);
 
-    return admin ? <AdminHome /> : <Home username={username} email={email} />;
+    return admin ? <AdminHome /> : <Home username={username}/>;
 }
