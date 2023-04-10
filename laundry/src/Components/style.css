@@ -25,3 +25,34 @@
     color: black ;
     margin-top: 50px ;
     }
+    .center{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        height: auto;
+    }
+    .size{
+        margin-left: 20vw;
+        width:100vw;
+        height:auto;
+        margin:auto;
+    }
+    .heading{
+        background-color: #3931af;
+        color: white;
+    }
+    .approve{
+        color:green;
+    }
+    .approve:hover{
+        background-color: green;
+        color:black;
+    }
+    .reject{
+        color:red;
+    }
+    .reject:hover{
+        background-color: red;
+        color:black;
+    }

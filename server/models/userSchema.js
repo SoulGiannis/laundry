@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema({
         type : String,
         required : true
     },
+    userType : {
+        type : String,
+        required : true
+    },
     tokens : [
         {
             token : {
@@ -38,7 +42,7 @@ userSchema.pre('save', async function(next){
     }
     next();
 })
-
+    
 //Generating Tokens to verify users
 userSchema.methods.generateToken = async function(){
     try {
@@ -54,4 +58,4 @@ userSchema.methods.generateToken = async function(){
 //Create Model
 const Users = new mongoose.model("user", userSchema);
 
-module.exports = Users;
+module.exports = Users;     

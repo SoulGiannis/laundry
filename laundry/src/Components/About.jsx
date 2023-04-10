@@ -1,8 +1,10 @@
 import React from 'react'
+import Navbar from './Navbar'
 
 export default function About() {
   return (
-    <div>
+      <div>
+          <Navbar/>
         <section id="about">
             <div className="container my-4 py-5">
                 <div className="row">

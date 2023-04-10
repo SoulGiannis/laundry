@@ -5,10 +5,16 @@ import { useHistory } from "react-router-dom";
 export default function Register() {
 
   const history = useHistory()
+  const [secretkey, setSecretkey] = useState("");
+  const handleSecretKey = (e) => {
+    setSecretkey(e.target.value);
+    console.log(secretkey)
+  }
   const [user, setuser] = useState({
     username : "",
     email : "",
-    password : ""
+    password: "",
+    userType: ""
   });
 
   //Handle Inputs
@@ -20,36 +26,74 @@ export default function Register() {
   }
 
   //Handle Submit
-  const handleSubmit = async (event)=>{
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    //Object Destrucring
+    if (user.userType !== "user" && secretkey !== "(laundry!#%&staff!#%&admin)") {
+      alert("Invalid Admin, Staff")
+    } else{
+    //Object Destrucring 
     //Store Object into Variables
-    const {username, email, password} = user;
+    const { username, email, password, userType } = user;
     try {
       //
-    const res = await fetch('/register', {
-      method : "POST",
-      headers : {
-        "Content-Type" : "application/json"
-      },
-      body : JSON.stringify({
-        username,email,password
+      const res = await fetch('/register', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          username, email, password, userType 
+        })
       })
-    })
 
-    if (res.status === 400 || !res) {
-      window.alert("Already Used Details");
-    }else{
-      window.alert("Registered Successfully");
-      history.pushState('/Login'); //history.pushState();
-    }
-  }catch(error){
+      if (res.status === 400 || !res) {
+        window.alert("Already Used Details");
+      } else {
+        window.alert("Registered Successfully");
+        history.push('/login'); //history.pushState();
+      }
+    } catch (error) {
       console.log(error);
     }
+  }
   }
 
   return (
     <div>
+         <div>
+        <nav className="navbar navbar-expand-lg shadow">
+  <div className="container-fluid">
+    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span className="navbar-toggler-icon"></span>
+    </button>
+    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+        <li className="nav-item">
+          <NavLink className="nav-link active" aria-current="page" to="/">Home</NavLink>
+        </li>
+        <li className="nav-item">
+          <NavLink className="nav-link" to="/about">About</NavLink>
+        </li>
+        <li className="nav-item">
+          <NavLink className="nav-link" to="/services">Services</NavLink>
+        </li>
+        <li className="nav-item">
+          <NavLink className="nav-link" to="/contact">Contact US</NavLink>
+        </li>
+      </ul>
+      <NavLink className="navbar-brand fs-4 mx-auto fw-bolder text-center" to="/">Rajeshwari Laundry</NavLink>
+      <NavLink to="/login" className="btn btn-outline-primary ms-auto px-4 rounded-pill" >
+    <i className="fa fa-user-plus me-2"></i>Dashboard</NavLink>
+    <NavLink to="/login" className="btn btn-outline-primary ms-2 px-4 rounded-pill" >
+    <i className="fa fa-sign-out me-2"></i>Login</NavLink>
+    <NavLink to="/logout" className="btn btn-outline-primary ms-2 px-4 rounded-pill" >
+    <i className="fa fa-sign-out me-2"></i>Logout</NavLink>
+    <NavLink to="/appointment" className="btn btn-outline-primary ms-2 px-4 rounded-pill" >
+    <i className="fa fa-calendar me-2"></i>Appointment</NavLink>
+    </div>
+  </div>
+</nav>
+    </div>
       <div className="container shadow my-5">
         <div className="row justify-content-center">
           <div className="col-md-5 d-flex flex-column align-items-center text-white justify-content-center order-2 form">
@@ -64,7 +108,44 @@ export default function Register() {
             <h1 className="display-6 fw-bolder m-5">REGISTER</h1>
             <form action="" onSubmit={handleSubmit} method="POST">
               <div className="mb-3">
-                <label htmlfor="exampleInputEmail1" className="form-label" id="username">
+                Register as
+                <input
+                  style={{cursor:"pointer"}}
+                    type="radio"
+                    name="userType"
+                    value="user"
+                    onChange={handleInput}
+                  />
+                  User
+                <input
+                    style={{cursor:"pointer"}}
+                    type="radio"
+                    name="userType"
+                    value="staff"
+                    onChange={handleInput}
+                  />
+                  Staff
+                <input
+                  style={{cursor:"pointer"}}
+                    type="radio"
+                    name="userType"
+                    value="admin"
+                    onChange={handleInput}
+                  />
+                Admin<br></br>
+                {user.userType!=="user"?<><label htmlFor="exampleInputEmail1" className="form-label" id="username">
+                  SecretKey
+                </label>
+                <input
+                  type="password"
+                  className="form-control"
+                  id="name"
+                  name="secretkey"
+                  value={secretkey}
+                  onChange={handleSecretKey}
+                /></>:null}
+                
+                <label htmlFor="exampleInputEmail1" className="form-label" id="username">
                   Username
                 </label>
                 <input
@@ -77,7 +158,7 @@ export default function Register() {
                 />
               </div>
               <div className="mb-3">
-                <label htmlfor="exampleInputEmail1" className="form-label" id="email">
+                <label htmlFor="exampleInputEmail1" className="form-label" id="email">
                   Email address
                 </label>
                 <input
@@ -94,7 +175,7 @@ export default function Register() {
                 </div>
               </div>
               <div className="mb-3">
-                <label htmlfor="exampleInputPassword1" className="form-label" id="password">
+                <label htmlFor="exampleInputPassword1" className="form-label" id="password">
                   Password
                 </label>
                 <input
@@ -112,7 +193,7 @@ export default function Register() {
                   className="form-check-input"
                   id="exampleCheck1"
                 />
-                <label className="form-check-label" htmlfor="exampleCheck1">
+                <label className="form-check-label" htmlFor="exampleCheck1">
                   I Agree Terms and Conditions
                 </label>
               </div>

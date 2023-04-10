@@ -17,6 +17,9 @@ import ProtectedRoute from './ProtectedRoute';
 import { useEffect, useState } from 'react';
 import Reports from './Components/Reports';
 import Appointment from './Components/Appointment';
+import AdminHome from './Components/AdminHome';
+import StaffHome from './Components/StaffHome';
+import UserDetails from './Components/UserDetails';
 
 
 function App() {
@@ -58,13 +61,17 @@ function App() {
 
     <>
       {/* <Dashboard/> */}
-      <Navbar/>
+      {/* <Navbar/> */}
       <Switch>
+        
         <Route exact path='/' component={Home}/>
         <Route exact path='/about' component={About}/>
         <Route exact path='/services' component={Services}/>
         <Route exact path='/contact' component={Contact}/>
         <Route exact path='/login' component={Login}/>
+        <ProtectedRoute exact path='/userdetails' component={UserDetails} auth={auth1}/>
+        <ProtectedRoute exact path='/adminhome' component={AdminHome} auth={auth1}/>
+        <ProtectedRoute exact path='/staffhome' component={StaffHome} auth={auth1}/>
         <ProtectedRoute exact path='/register' component={Register} auth={auth1}/>
         <ProtectedRoute exact path='/dashboard' component={Dashboard} auth={auth1}/>
         <ProtectedRoute exact path='/logout' component={Logout} auth={auth1}/>

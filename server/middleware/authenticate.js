@@ -16,9 +16,9 @@ const authenticate = async (req, res, next) =>{
                 res.status(401).send("User Not Found");
             } else {
                 res.status(200).send("Authorized User");
-                next();
             }
         }
+        next();
 
     } catch (error){
         res.status(401).send("Error");
