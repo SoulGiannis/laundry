@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react'
-import { NavLink } from 'react-bootstrap';
+import { NavLink } from "react-router-dom";
 const StaffHome = () => {
   const [admin, setAdmin] = useState();
   const [userData, setUserData] = useState([]);
@@ -20,19 +20,9 @@ const StaffHome = () => {
         setCollection(data.data);
       });
   }
-  const approve = ({name}) => {
-    if (window.confirm(`user ${name} approved`)) {
-      alert("approved")
-    }
-  }
-  const sendRejectMail = ({name}) => {
-    if (window.confirm(`user ${name} rejected`)) {
-      alert("rejected")
-    }
-  }
 
  const sendApprovalMail = (mail) => {
-  if (window.confirm(`Approve ${mail} Appointment`)) {
+  if (window.confirm(`Approve Appointment for ${mail}`)) {
     fetch("/mailapp", {
       method: "POST",
       headers: {
@@ -42,6 +32,37 @@ const StaffHome = () => {
         to: mail,
         subject: "Approved Appointment",
         text: "Your appointment with rajeshwari laundry is approved on given time.",
+      }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Failed to send mail");
+        }
+      })
+      .then((data) => {
+        alert(data.data);
+        getStaffUser();
+      })
+      .catch((error) => {
+        console.error(error);
+        alert(error.message);
+      });
+  }
+  };
+  
+ const sendRejectMail = (mail) => {
+  if (window.confirm(`Reject Appointment for ${mail}`)) {
+    fetch("/mailrej", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        to: mail,
+        subject: "Rejected Appointment",
+        text: "Your appointment with rajeshwari laundry is rejected on given time.",
       }),
     })
       .then((res) => {
@@ -112,13 +133,34 @@ const StaffHome = () => {
                 <td style={{ border: "2px solid black" }}>{i.service}</td>
                 <td style={{ border: "2px solid black" }}>{i.additionalComment}</td>
                 <td style={{ border: "2px solid black",cursor:"pointer" }} onClick={() => { sendApprovalMail(i.email) }} className='approve'>Approve</td>
-                <td style={{ border: "2px solid black", cursor: "pointer" }} onClick={sendRejectMail} className='reject'>Reject</td>
+                <td style={{ border: "2px solid black", cursor: "pointer" }} onClick={() => { sendRejectMail(i.email) }} className='reject'>Reject</td>
               </tr>
             )
           })}
         </tbody>
       </table>
-    </div>
+      </div>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
             </>
   )
 }

@@ -584,8 +584,8 @@ app.post("/mailapp", async (req, res) => {
     let mailOptions = {
       from: 'chaudharyrishabh029@gmail.com',
       to: 'soulgiannis22@gmail.com',
-      subject: 'Approved Appointment',
-      text: 'your appointment with rajeshwari laundry is approved on given time.'
+      subject: 'Rajeshwari Laundry Appointment Approved',
+      text: 'Dear Customer,  Your appointment with rajeshwari laundry is approved on given time you can contact 329049032 for more details.'
     };
 
     transporter.sendMail(mailOptions, function(error, info){
@@ -603,15 +603,45 @@ app.post("/mailapp", async (req, res) => {
   }
 });
 
-
-//sending mail to rejected user
-app.get("/mailrej", async (req, res) => {
+//rejected mail to customer
+app.post("/mailrej", async (req, res) => {
   try {
-    
-  }catch (error) {    
-    
+    const accessToken = await oAuth2Client.getAccessToken()
+    let transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        type: "OAuth2",
+        user: "chaudharyrishabh029@gmail.com",
+        clientId: CLIENT_ID,
+        clientSecret: CLIENT_SECRET,
+        refreshToken: REFRESH_TOKEN,
+        accessToken: accessToken
+
+      }
+    });
+
+    let mailOptions = {
+      from: 'chaudharyrishabh029@gmail.com',
+      to: 'soulgiannis22@gmail.com',
+      subject: 'Appointment with rajeshwari laundry is Rejected',
+      text: 'Dear Customer, Your appointment with rajeshwari laundry is Rejected for more because of some reason for more details please contact on 3534058203.'
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+        res.status(400).send({ status: "error", data: "unable to send mail to user" });
+      } else {
+        console.log('Email sent: ' + info.response);
+        res.status(200).send({ status: "success", data: "Mail sent successfully" });
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({ status: "error", data: "unable to send mail" });
   }
-})
+});
+
 
 //Logout Page
 app.get('/logout', (req,res)=>{
