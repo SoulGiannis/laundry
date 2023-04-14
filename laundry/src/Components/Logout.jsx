@@ -16,7 +16,7 @@ export default function Logout() {
       if (res.status === 401 || !res) {
         window.alert('Please logout later');
       } else {
-        history.push('/');
+        history.push('/login');
         window.location.reload();
       }
     } catch (error) {

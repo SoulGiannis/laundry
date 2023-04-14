@@ -1,64 +1,4 @@
-// import React,{useEffect, useState} from 'react'
 
-// const StaffHome = () => {
-//   const [admin, setAdmin] = useState();
-//   const [userData, setUserData] = useState();
-//   const [staff, setStaff] = useState();
-//   const [collection, setCollection] = useState();
-
-//   useEffect(() => { getStaffUser() }, []);
-//     const getStaffUser = () => {
-//     fetch("/getUserStaff", {
-//       method: "GET",
-//     })
-//       .then((res) => res.json())
-//       .then((data) => {
-//         console.log(data, "userData");
-//         setUserData(data.data);
-//         setCollection(userData.data);
-//       });
-//     }
-//   return (
-//     <div className='center'>
-//       <table className='size' style={{border:"1px solid black"}}>
-//         <tr style={{border:"2px solid black"}}>
-//           <th className='heading' style={{border:"2px solid black"}}>name</th>
-//           <th className='heading' style={{border:"2px solid black"}}>phone</th>
-//           <th className='heading' style={{border:"2px solid black"}}>email</th>
-//           <th className='heading' style={{border:"2px solid black"}}>pickupDate</th>
-//           <th className='heading' style={{border:"2px solid black"}}>deliveryDate</th>
-//           <th className='heading' style={{border:"2px solid black"}}>pickupAddress</th>
-//           <th className='heading' style={{border:"2px solid black"}}>deliveryAddress</th>
-//           <th className='heading' style={{border:"2px solid black"}}>Services</th>
-//           <th className='heading' style={{border:"2px solid black"}}>Comment</th>
-//           <th className='heading' style={{border:"2px solid black"}}>Approve</th>
-//           <th className='heading' style={{border:"2px solid black"}}>Reject</th>
-//         </tr>
-
-//         {userData.map((i, key) => {
-//           return (
-//             <tr>
-//               <th style={{ border: "2px solid black" }} key={key}>{i.name}</th>
-//               <th style={{ border: "2px solid black" }} key={key}>{i.phone}</th>
-//               <th style={{ border: "2px solid black" }} key={key}>{i.email}</th>
-//               <th style={{ border: "2px solid black" }} key={key}>{i.pickupDate}</th>
-//               <th style={{ border: "2px solid black" }} key={key}>{i.deliveryDate}</th>
-//               <th style={{ border: "2px solid black" }} key={key}>{i.pickupAddress}</th>
-//               <th style={{ border: "2px solid black" }} key={key}>{i.deliveryAddress}</th>
-//               <th style={{ border: "2px solid black" }} key={key}>{i.service}</th>
-//               <th style={{ border: "2px solid black" }} key={key}>{i.additionalComment}</th>
-//               <th style={{ border: "2px solid black",cursor:"pointer" }} key={key}>Approve</th>
-//               <th style={{ border: "2px solid black",cursor:"pointer" }} key={key}>Reject</th>
-//             </tr>
-//           )
-//         })
-//         }
-//       </table>
-//     </div>
-//   )
-// }
-
-// export default StaffHome
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-bootstrap';
 const StaffHome = () => {
@@ -85,11 +25,44 @@ const StaffHome = () => {
       alert("approved")
     }
   }
-  const reject = ({name}) => {
+  const sendRejectMail = ({name}) => {
     if (window.confirm(`user ${name} rejected`)) {
       alert("rejected")
     }
   }
+
+ const sendApprovalMail = (mail) => {
+  if (window.confirm(`Approve ${mail} Appointment`)) {
+    fetch("/mailapp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        to: mail,
+        subject: "Approved Appointment",
+        text: "Your appointment with rajeshwari laundry is approved on given time.",
+      }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Failed to send mail");
+        }
+      })
+      .then((data) => {
+        alert(data.data);
+        getStaffUser();
+      })
+      .catch((error) => {
+        console.error(error);
+        alert(error.message);
+      });
+  }
+};
+
+
   return (
     <>
       <div>
@@ -138,8 +111,8 @@ const StaffHome = () => {
                 <td style={{ border: "2px solid black" }}>{i.deliveryAddress}</td>
                 <td style={{ border: "2px solid black" }}>{i.service}</td>
                 <td style={{ border: "2px solid black" }}>{i.additionalComment}</td>
-                <td style={{ border: "2px solid black",cursor:"pointer" }} onClick={approve} className='approve'>Approve</td>
-                <td style={{ border: "2px solid black",cursor:"pointer" }} onClick={reject} className='reject'>Reject</td>
+                <td style={{ border: "2px solid black",cursor:"pointer" }} onClick={() => { sendApprovalMail(i.email) }} className='approve'>Approve</td>
+                <td style={{ border: "2px solid black", cursor: "pointer" }} onClick={sendRejectMail} className='reject'>Reject</td>
               </tr>
             )
           })}

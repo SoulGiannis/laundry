@@ -72,12 +72,12 @@ const [user, setuser] = useState({
         </li>
       </ul>
       <NavLink className="navbar-brand fs-4 mx-auto fw-bolder text-center" to="/">Rajeshwari Laundry</NavLink>
-      <NavLink to="/login" className="btn btn-outline-primary ms-auto px-4 rounded-pill" >
+      <NavLink to="/dashboard" className="btn btn-outline-primary ms-auto px-4 rounded-pill" >
     <i className="fa fa-user-plus me-2"></i>Dashboard</NavLink>
-    <NavLink to="/logout" className="btn btn-outline-primary ms-2 px-4 rounded-pill" >
-    <i className="fa fa-sign-out me-2"></i>Logout</NavLink>
     <NavLink to="/appointment" className="btn btn-outline-primary ms-2 px-4 rounded-pill" >
     <i className="fa fa-calendar me-2"></i>Appointment</NavLink>
+    <NavLink to="/logout" className="btn btn-outline-primary ms-2 px-4 rounded-pill" >
+    <i className="fa fa-sign-out me-2"></i>Logout</NavLink>
     </div>
   </div>
 </nav>

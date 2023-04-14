@@ -26,7 +26,7 @@ function App() {
   //Checking if User is Logged IN
 
   const [auth, setauth] = useState(false);
-  const [auth1, setauth1] = useState(true);
+  const [auth1, setauth1] = useState(false);
 
   const isLoggedIn = async () => {
     try {

@@ -1,7 +1,7 @@
   import React from 'react'
-  import About from './About'
-  import Contact from './Contact'
-  import Services from './Services'
+  import AboutHome from './AboutHome'
+  import ContactHome from './ContactHome'
+  import ServicesHome from './ServicesHome'
   import { NavLink } from 'react-router-dom'
   export default function Home({username,email}) {
       
@@ -16,9 +16,6 @@
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
         <li className="nav-item">
-          <NavLink className="nav-link active" aria-current="page" to="/">Home</NavLink>
-        </li>
-        <li className="nav-item">
           <NavLink className="nav-link" to="/about">About</NavLink>
         </li>
         <li className="nav-item">
@@ -29,12 +26,12 @@
         </li>
       </ul>
       <NavLink className="navbar-brand fs-4 mx-auto fw-bolder text-center" to="/">Rajeshwari Laundry</NavLink>
-      <NavLink to="/login" className="btn btn-outline-primary ms-auto px-4 rounded-pill" >
+      <NavLink to="/dashboard" className="btn btn-outline-primary ms-auto px-4 rounded-pill" >
     <i className="fa fa-user-plus me-2"></i>Dashboard</NavLink>
-    <NavLink to="/logout" className="btn btn-outline-primary ms-2 px-4 rounded-pill" >
-    <i className="fa fa-sign-out me-2"></i>Logout</NavLink>
     <NavLink to="/appointment" className="btn btn-outline-primary ms-2 px-4 rounded-pill" >
     <i className="fa fa-calendar me-2"></i>Appointment</NavLink>
+    <NavLink to="/logout" className="btn btn-outline-primary ms-2 px-4 rounded-pill" >
+    <i className="fa fa-sign-out me-2"></i>Logout</NavLink>
     </div>
   </div>
 </nav>
@@ -54,9 +51,9 @@
                   </div>
               </div>
           </section>
-          <About/>
-          <Services/>
-          <Contact/>
+          <AboutHome/>
+          <ServicesHome/>
+          <ContactHome/>
       </div>
     )
   }

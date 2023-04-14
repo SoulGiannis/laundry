@@ -1,17 +1,25 @@
 //Importing all dependices
 const dotenv = require('dotenv');
 const express = require('express');
+const { google } = require('googleapis');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const { connectDB } = require('./db/conn.js');
 const cookieParser = require('cookie-parser');
+const nodemailer = require('nodemailer');
+
+const CLIENT_ID = "238748038318-ha609eqsncs45pbadc40f5lsme9rmmub.apps.googleusercontent.com"
+const CLIENT_SECRET = "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"
+const  REDIRECT_URI = "https://developers.google.com/oauthplayground"
+const  REFRESH_TOKEN = "1//04TBqJWKi7cOjCgYIARAAGAQSNwF-L9IrRSWLhE1INFgBcYODemSitJGCvhyYnIita9SaGl0Deqrn44JfIdv4zabOJd0S7jSa8TU"
+
 
 const app = express();
 app.use(cors());
 //Configure ENV File & Require Connection File
 dotenv.config();
-require('./db/conn')
+require('./db/conn')  
 const port = process.env.PORT;
 
 //Methods to fetch data from Front-end
@@ -554,6 +562,57 @@ app.get("/getUserStaff", async (req, res) => {
   }
 });
 
+//sending mail to approved user
+const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
+oAuth2Client.setCredentials({refresh_token:REFRESH_TOKEN})
+app.post("/mailapp", async (req, res) => {
+  try {
+    const accessToken = await oAuth2Client.getAccessToken()
+    let transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        type: "OAuth2",
+        user: "chaudharyrishabh029@gmail.com",
+        clientId: CLIENT_ID,
+        clientSecret: CLIENT_SECRET,
+        refreshToken: REFRESH_TOKEN,
+        accessToken: accessToken
+
+      }
+    });
+
+    let mailOptions = {
+      from: 'chaudharyrishabh029@gmail.com',
+      to: 'soulgiannis22@gmail.com',
+      subject: 'Approved Appointment',
+      text: 'your appointment with rajeshwari laundry is approved on given time.'
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+        res.status(400).send({ status: "error", data: "unable to send mail to user" });
+      } else {
+        console.log('Email sent: ' + info.response);
+        res.status(200).send({ status: "success", data: "Mail sent successfully" });
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({ status: "error", data: "unable to send mail" });
+  }
+});
+
+
+//sending mail to rejected user
+app.get("/mailrej", async (req, res) => {
+  try {
+    
+  }catch (error) {    
+    
+  }
+})
+
 //Logout Page
 app.get('/logout', (req,res)=>{
     res.clearCookie("jwt", {path : '/'})
@@ -561,7 +620,8 @@ app.get('/logout', (req,res)=>{
 })
 
 //Authentication
-app.get('/auth', authenticate, (req, res, next) =>{
+app.get('/auth', authenticate, (req, res, next) => {
+  
 })
 
 //Run Server
