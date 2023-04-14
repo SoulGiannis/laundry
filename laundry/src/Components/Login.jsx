@@ -136,6 +136,7 @@ export default function Login() {
                   </label>
                   <input
                     type="password"
+                    minlength="8"
                     className="form-control"
                     id="exampleInputPassword1"
                     name="password"

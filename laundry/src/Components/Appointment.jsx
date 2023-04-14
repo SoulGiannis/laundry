@@ -96,12 +96,12 @@ const [user, setuser] = useState({
         <form id="appointment-form" onSubmit={handleSubmit} method="post">
           <div className="form-group">
             <label for="name">Name</label>
-            <input type="text" className="form-control" id="name" name="name" onChange={handleInput} placeholder="Enter your name" required />
+            <input type="text" className="form-control" id="name" name="name" onChange={handleInput} minlength="2" maxlength="40" placeholder="Enter your name" required />
             <br />
           </div>
           <div className="form-group">
             <label for="phone">Phone Number</label>
-            <input type="tel" className="form-control" id="phone" name="phone" onChange={handleInput} placeholder="Enter your phone number" required />
+            <input type="tel" className="form-control" id="phone" name="phone" onChange={handleInput} pattern="[6-9]{1}[0-9]{9}" placeholder="Enter your phone number" required />
             <br />
           </div>
           <div className="form-group">
@@ -111,7 +111,7 @@ const [user, setuser] = useState({
           </div>
           <div className="form-group">
             <label for="pickup-date">Pickup Date</label>
-            <input type="date" className="form-control" id="pickup-date"  name="pickupDate"onChange={handleInput}  required />
+            <input type="date" className="form-control" id="pickup-date"  name="pickupDate" max="2023-05-30" min="2023-04-15" onChange={handleInput}  required />
             <br />
           </div>
           <div className="form-group">
