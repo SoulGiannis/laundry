@@ -90,7 +90,8 @@ const [user, setuser] = useState({
         name="date"
         // value={reportData.date}
         onChange={handleInput}
-        required
+            required
+            max="2023-05-30" min="2023-04-15"
         />
     </Form.Group>
 

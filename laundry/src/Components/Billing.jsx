@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Container, Row, Col, Form, Table, Button } from 'react-bootstrap';
 import './style.css';
@@ -9,13 +9,27 @@ export default function Billing() {
     quantity: "",
     price : "",
   });
-
+  const [items, setItems] = useState([]);
   //Handle Inputs
   const handleInput = (event)=>{
     let name = event.target.name;
     let value = event.target.value;
 
     setuser({...user, [name]:value})
+  }
+
+  useEffect(() => { getBilling() }, []);
+
+    //get details of user's appointment
+  const getBilling = () => {
+    fetch("/getBilling", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "userData");
+        setItems(data.data);
+      });
   }
 
   //Handle Submit
@@ -92,7 +106,7 @@ export default function Billing() {
           <Col>
             <Form.Group controlId="itemName">
               <Form.Label>Item Name:</Form.Label>
-              <Form.Control type="text" name="itemName" onChange={handleInput} required />
+              <Form.Control type="text" name="itemName" minlength="2" maxlength="40" onChange={handleInput} required />
             </Form.Group>
           </Col>
           <Col>
@@ -130,14 +144,14 @@ export default function Billing() {
           </tr>
         </thead>
         <tbody>
-          {/* {items.map((item, index) => (
+          {items.map((item, index) => (
             <tr key={index}>
               <td>{item.itemName}</td>
               <td>{item.quantity}</td>
-              <td>{item.pricePerKg}</td>
+              <td>{item.price}</td>
               <td>{item.totalCost} ₹</td>
             </tr>
-          ))} */}
+          ))}
         </tbody>
         <tfoot>
           <tr>

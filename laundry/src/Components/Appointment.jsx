@@ -116,17 +116,17 @@ const [user, setuser] = useState({
           </div>
           <div className="form-group">
             <label for="delivery-date">Delivery Date</label>
-            <input type="date" className="form-control" id="delivery-date" name="deliveryDate" onChange={handleInput} required />
+            <input type="date" className="form-control" id="delivery-date" name="deliveryDate" max="2023-05-30" min="2023-04-15" onChange={handleInput} required />
             <br />
           </div>
           <div className="form-group">
             <label for="pickup-address">Pickup Address</label>
-            <input type="text" className="form-control" id="pickup-address" name="pickupAddress" onChange={handleInput} placeholder="Enter your pickup address" required />
+            <input type="text" className="form-control" id="pickup-address" name="pickupAddress" minlength="20" maxlength="50" onChange={handleInput} placeholder="Enter your pickup address" required />
             <br />
           </div>
           <div className="form-group">
             <label for="delivery-address">Delivery Address</label>
-            <input type="text" className="form-control" id="delivery-address" name="deliveryAddress" onChange={handleInput} placeholder="Enter your delivery address" required />
+            <input type="text" className="form-control" id="delivery-address" name="deliveryAddress" minlength="20" maxlength="40" onChange={handleInput} placeholder="Enter your delivery address" required />
             <br />
           </div>
           <div className="form-group">
@@ -141,7 +141,7 @@ const [user, setuser] = useState({
           </div>
           <div className="form-group">
             <label for="additional-comments">Additional Comments</label>
-            <textarea className="form-control" id="additional-comments" name="additionalComment"  onChange={handleInput} rows="3"></textarea>
+            <textarea className="form-control" id="additional-comments" name="additionalComment" minlength="10" maxlength="100" onChange={handleInput} rows="3"></textarea>
             <br />
           </div>
           <button type="submit" className="btn btn-outline-primary">Submit Request</button>

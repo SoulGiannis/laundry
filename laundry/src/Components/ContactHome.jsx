@@ -81,7 +81,9 @@ export default function Contact() {
                         placeholder="Enter your Name"
                         name="name"
                         value={msg.name}
-                        onChange = {handleChange}
+                        onChange={handleChange}
+                        minlength="2" maxlength="50"
+                        required
                       />
                     </div>
                     <div className="mb-3">
@@ -95,7 +97,8 @@ export default function Contact() {
                         placeholder="name@example.com"
                         name="email"
                         value={msg.email}
-                        onChange = {handleChange}
+                        onChange={handleChange}
+                        required
                       />
                     </div>
                     <div className="mb-3">
@@ -110,7 +113,9 @@ export default function Contact() {
                         rows="5"
                         name="message"
                         value={msg.message}
-                        onChange = {handleChange}
+                        onChange={handleChange}
+                        required
+                        minlength="5" maxlength="100"
                       ></textarea>
                     </div>
                     <button type="submit" className="btn btn-outline-primary rounded-pill px-4">Send Message <i className="fa fa-paper-plane ms-2"></i></button>

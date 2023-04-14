@@ -1,14 +1,26 @@
 
 import React, { useEffect, useState } from 'react'
 import { NavLink } from "react-router-dom";
+
 const StaffHome = () => {
+  
   const [admin, setAdmin] = useState();
   const [userData, setUserData] = useState([]);
+  const [userStaffMsgData, setUserStaffMsgData] = useState([]);
+  const [message, setMessage] = useState(" ");
   const [staff, setStaff] = useState([]);
   const [collection, setCollection] = useState([]);
 
   useEffect(() => { getStaffUser() }, []);
+  useEffect(() => { getStaffMsg() }, []);
 
+
+  //set reply form details
+  const replyMessage = (e) => {
+    setMessage(e.target.value);
+  }
+
+  //get details of user's appointment
   const getStaffUser = () => {
     fetch("/getUserStaff", {
       method: "GET",
@@ -21,6 +33,19 @@ const StaffHome = () => {
       });
   }
 
+  //get details of user's contactus (messsage)
+  const getStaffMsg = () => {
+    fetch("/getUserMsg", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "userData");
+        setUserStaffMsgData(data.data);
+      });
+  }
+
+  //send approval message
  const sendApprovalMail = (mail) => {
   if (window.confirm(`Approve Appointment for ${mail}`)) {
     fetch("/mailapp", {
@@ -49,9 +74,30 @@ const StaffHome = () => {
         console.error(error);
         alert(error.message);
       });
+    
+    //delete user from staff site
+    fetch("/deleteUserStaff", {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        userEmail:mail,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "userData");
+        alert(data.data);
+        getStaffUser();
+      });
   }
-  };
+};
   
+  //send rejection mail
  const sendRejectMail = (mail) => {
   if (window.confirm(`Reject Appointment for ${mail}`)) {
     fetch("/mailrej", {
@@ -80,9 +126,82 @@ const StaffHome = () => {
         console.error(error);
         alert(error.message);
       });
+    
+    //delete user from staff site
+     fetch("/deleteUserStaff", {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        userEmail:mail,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "userData");
+        alert(data.data);
+        getStaffUser();
+      });
+  }
+};
+  //send messageReply mail
+  const sendMessageMail = (mail, message) => {
+    
+  if (window.confirm(`Send Reply to ${mail} via mail`)) {
+    fetch("/sendMailMsg", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        to: mail,
+        subject: message,
+        text: "hello world",
+      }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Failed to send mail");
+        }
+      })
+      .then((data) => {
+        alert(data.data);
+        getStaffUser();
+      })
+      .catch((error) => {
+        console.error(error);
+        alert(error.message);
+      });
+    
+    //delete user from staff site
+     fetch("/deleteUserMessage", {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        userEmail:mail,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "userData");
+        alert(data.data);
+        getStaffMsg();
+      });
   }
 };
 
+  
 
   return (
     <>
@@ -140,6 +259,34 @@ const StaffHome = () => {
         </tbody>
       </table>
       </div>
+
+      <h1>Customer Query</h1>
+           <table className='size' style={{border:"1px solid black"}}>
+        <thead>
+          <tr style={{border:"2px solid black"}}>
+            <th className='heading' style={{border:"2px solid black"}}>name</th>
+            <th className='heading' style={{border:"2px solid black"}}>email</th>
+            <th className='heading' style={{border:"2px solid black"}}>Message</th>
+            <th className='heading' style={{border:"2px solid black"}}>Reply to user</th>
+            <th className='heading' style={{border:"2px solid black"}}>Send</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {userStaffMsgData.map((i, key) => {
+            return (
+              <tr key={key}>
+                <td style={{ border: "2px solid black" }}>{i.name}</td>
+                <td style={{ border: "2px solid black" }}>{i.email}</td>
+                <td style={{ border: "2px solid black" }}>{i.message}</td>  
+                <td style={{ border: "2px solid black" }}><input onChange={replyMessage} type="text" name="reply"/></td>
+                <td style={{ border: "2px solid black",cursor:"pointer" }} onClick={() => { sendMessageMail(i.email, i.message) }} className='approve'>Reply</td>
+              </tr>
+            )
+          })} 
+        </tbody>
+      </table>
+      
       <br/>
       <br/>
       <br/>

@@ -299,10 +299,37 @@ app.get("/getAllUser", async (req, res) => {
     }
 })
 
+//delete user from admin site
 app.post("/deleteUser", async (req, res) => {
     const { userId } = req.body;
     try {
         Users.deleteOne({ _id: userId }, function (err, res) {
+            console.log(err);
+        })
+        res.send({ status: "ok", data: "deleted" })
+    } catch (error) {
+        res.send(error)
+    }
+})
+
+//delete from staff site
+app.post("/deleteUserStaff", async (req, res) => {
+    const { userEmail } = req.body;
+    try {
+        Appointments.deleteOne({ email: userEmail }, function (err, res) {
+            console.log(err);
+        })
+        res.send({ status: "ok", data: "deleted" })
+    } catch (error) {
+        res.send(error)
+    }
+})
+
+//delete message(contactus form) from staff site
+app.post("/deleteUserMessage", async (req, res) => {
+    const { userEmail } = req.body;
+    try {
+        Message.deleteOne({ email: userEmail }, function (err, res) {
             console.log(err);
         })
         res.send({ status: "ok", data: "deleted" })
@@ -562,10 +589,44 @@ app.get("/getUserStaff", async (req, res) => {
   }
 });
 
+//get billing details 
+app.get("/getBilling", async (req, res) => {
+  try {
+    const allUser = await Billings.find({});
+        res.send({status:"ok", data:allUser})
+  } catch (error) {
+    console.log(error);
+    res.send(error);
+  }
+});
+
+//get inventory details 
+app.get("/getInventory", async (req, res) => {
+  try {
+    const allUser = await Inventorys.find({});
+        res.send({status:"ok", data:allUser})
+  } catch (error) {
+    console.log(error);
+    res.send(error);
+  }
+});
+
+//get message at staff site
+app.get("/getUserMsg", async (req, res) => {
+  try {
+    const allUser = await Message.find({});
+        res.send({status:"ok", data:allUser})
+  } catch (error) {
+    console.log(error);
+    res.send(error);
+  }
+});
+
 //sending mail to approved user
 const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
 oAuth2Client.setCredentials({refresh_token:REFRESH_TOKEN})
 app.post("/mailapp", async (req, res) => {
+  const { to } = req.body;
   try {
     const accessToken = await oAuth2Client.getAccessToken()
     let transporter = nodemailer.createTransport({
@@ -583,7 +644,7 @@ app.post("/mailapp", async (req, res) => {
 
     let mailOptions = {
       from: 'chaudharyrishabh029@gmail.com',
-      to: 'soulgiannis22@gmail.com',
+      to: to,
       subject: 'Rajeshwari Laundry Appointment Approved',
       text: 'Dear Customer,  Your appointment with rajeshwari laundry is approved on given time you can contact 329049032 for more details.'
     };
@@ -605,6 +666,7 @@ app.post("/mailapp", async (req, res) => {
 
 //rejected mail to customer
 app.post("/mailrej", async (req, res) => {
+  const { to } = req.body;
   try {
     const accessToken = await oAuth2Client.getAccessToken()
     let transporter = nodemailer.createTransport({
@@ -622,8 +684,48 @@ app.post("/mailrej", async (req, res) => {
 
     let mailOptions = {
       from: 'chaudharyrishabh029@gmail.com',
-      to: 'soulgiannis22@gmail.com',
+      to: to,
       subject: 'Appointment with rajeshwari laundry is Rejected',
+      text: 'Dear Customer, Your appointment with rajeshwari laundry is Rejected for more because of some reason for more details please contact on 3534058203.'
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+        res.status(400).send({ status: "error", data: "unable to send mail to user" });
+      } else {
+        console.log('Email sent: ' + info.response);
+        res.status(200).send({ status: "success", data: "Mail sent successfully" });
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({ status: "error", data: "unable to send mail" });
+  }
+});
+
+// reply mail from staff to contactus form user
+app.post("/sendMailMsg", async (req, res) => {
+  const { to, message } = req.body;
+  try {
+    const accessToken = await oAuth2Client.getAccessToken()
+    let transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        type: "OAuth2",
+        user: "chaudharyrishabh029@gmail.com",
+        clientId: CLIENT_ID,
+        clientSecret: CLIENT_SECRET,
+        refreshToken: REFRESH_TOKEN,
+        accessToken: accessToken
+
+      }
+    });
+
+    let mailOptions = {
+      from: 'chaudharyrishabh029@gmail.com',
+      to: to,
+      subject: message,
       text: 'Dear Customer, Your appointment with rajeshwari laundry is Rejected for more because of some reason for more details please contact on 3534058203.'
     };
 

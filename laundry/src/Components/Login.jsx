@@ -121,6 +121,7 @@ export default function Login() {
                     name="email"
                     value={user.email}
                     onChange={handleChange}
+                    required
                   />
                   <div id="emailHelp" className="form-text">
                     We'll never share your email with anyone else.
@@ -142,6 +143,7 @@ export default function Login() {
                     name="password"
                     value={user.password}
                     onChange={handleChange}
+                    required
                   />
                 </div>
                 <div className="mb-3 form-check">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { Table } from 'react-bootstrap';
 
@@ -10,7 +10,21 @@ export default function Supplies() {
     quantity : "",
     price: ""
   });
+  const [supply, setSupply] = useState([]);
 
+    useEffect(() => { getInventory() }, []);
+
+    //get details of user's appointment
+  const getInventory = () => {
+    fetch("/getInventory", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "userData");
+        setSupply(data.data);
+      });
+  }
   //Handle Inputs
   const handleInput = (event)=>{
     let name = event.target.name;
@@ -79,7 +93,7 @@ export default function Supplies() {
     <i className="fa fa-sign-out me-2"></i>Logout</NavLink>
     </div>
   </div>
-</nav>
+</nav>  
     </div>
       <br />
     <div>
@@ -96,7 +110,7 @@ export default function Supplies() {
       </div>
       <div className="form-group">
         <label htmlFor="supplyDate">Date of Supplies:</label>
-        <input type="date" className="form-control" id="supplyDate" name="dateofSupply" onChange={handleInput} required />
+        <input type="date" className="form-control" id="supplyDate" max="2023-05-30" min="2023-04-15" name="dateofSupply" onChange={handleInput} required />
       </div>
       <div className="form-group">
         <label htmlFor="supplyQuantity">Quantity (in kg):</label>
@@ -121,18 +135,18 @@ export default function Supplies() {
           <th>Action</th>
         </tr>
       </thead>
-      {/* <tbody>
-        {supplies.map((supply, index) => (
+      <tbody>
+        {supply.map((supply, index) => (
           <tr key={index}>
             <td>{supply.supplyName}</td>
-            <td>{supply.supplyDate}</td>
-            <td>{supply.supplyQuantity}</td>
-            <td>{supply.supplyPrice}</td>
+            <td>{supply.dateofSupply}</td>
+            <td>{supply.quantity}</td>
+            <td>{supply.price}</td>
             <td>{supply.totalCost}</td>
-            <td><button className="btn btn-danger" onClick={() => handleDelete(index)}>Delete</button></td>
+            {/* <td><button className="btn btn-danger" onClick={() => handleDelete(index)}>Delete</button></td> */}
           </tr>
         ))}
-      </tbody> */}
+      </tbody>
     </Table>
     <br />
     <br />
