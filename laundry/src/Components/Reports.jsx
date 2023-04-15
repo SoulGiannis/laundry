@@ -1,8 +1,34 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button,Table } from 'react-bootstrap';
 
 export default function Reports() {
+//for current date in form today's date
+const d = new Date();
+var date = d.getDate() + 1;
+var month = d.getMonth() + 1;
+var year = d.getUTCFullYear();
+
+if (date < 10) {
+  date = '0' + date;
+}
+
+if (month < 10) {
+  month = '0' + month;
+}
+
+var currDate = year + '-' + month + '-' + date;
+
+// 1 month after current date
+  var newMonth = parseInt(month) + 1;
+  if (newMonth < 10) {
+    newMonth = '0' + newMonth;
+  }
+
+var oneMonthDate = year + '-' + newMonth + '-' + date;
+
+
+
 const [user, setuser] = useState({
     date : "",
     machineId: "",
@@ -10,7 +36,7 @@ const [user, setuser] = useState({
     totalWeight: "",
     totalCosts: ""
   });
-
+const [report, setReport] = useState([])
   //Handle Inputs
   const handleInput = (event)=>{
     let name = event.target.name;
@@ -19,6 +45,20 @@ const [user, setuser] = useState({
     setuser({...user, [name]:value})
   }
 
+
+    useEffect(() => { getReport() }, []);
+
+    //get details of user's appointment
+  const getReport = () => {
+    fetch("/getReport", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "userData");
+        setReport(data.data);
+      });
+  }
   //Handle Submit
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -91,7 +131,7 @@ const [user, setuser] = useState({
         // value={reportData.date}
         onChange={handleInput}
             required
-            max="2023-05-30" min="2023-04-15"
+           max={oneMonthDate} min={currDate}
         />
     </Form.Group>
 
@@ -150,7 +190,30 @@ const [user, setuser] = useState({
     <br />
     <br />
     <br />
-  </Form>
+      </Form>
+      <Table className="item-list" striped bordered hover>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Machine Id</th>
+            <th>Total Loads</th>
+            <th>Total Weight</th>
+            <th>Total Costs</th>
+          </tr>
+        </thead>
+        <tbody>
+          {report.map((item, index) => (
+            <tr key={index}>
+              <td>{item.date}</td>
+              <td>{item.machineId}</td>
+              <td>{item.totalLoads}</td>
+              <td>{item.totalWeight} ₹</td>
+              <td>{item.totalCosts} ₹</td>
+            </tr>
+          ))}
+        </tbody>
+        
+      </Table>
         </>
 );
 };

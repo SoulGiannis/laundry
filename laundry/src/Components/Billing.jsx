@@ -140,7 +140,6 @@ export default function Billing() {
             <th>Item Name</th>
             <th>Quantity (kg)</th>
             <th>Price (₹):</th>
-            <th>Total Cost</th>
           </tr>
         </thead>
         <tbody>
@@ -149,16 +148,15 @@ export default function Billing() {
               <td>{item.itemName}</td>
               <td>{item.quantity}</td>
               <td>{item.price}</td>
-              <td>{item.totalCost} ₹</td>
             </tr>
           ))}
         </tbody>
-        <tfoot>
-          <tr>
-            <td colSpan="3">Total Cost:</td>
+        {/* <tfoot> */}
+          {/* <tr> */}
+            {/* <td colSpan="3">Total Cost:</td> */}
             {/* <td>{totalCost} ₹</td> */}
-          </tr>
-        </tfoot>
+          {/* </tr> */}
+        {/* </tfoot> */}
       </Table>
       <br />
       {/* <Button onClick={handlePrint} align='right' className='mx-2'>Print Bill</Button>

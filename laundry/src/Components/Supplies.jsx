@@ -4,6 +4,35 @@ import { Table } from 'react-bootstrap';
 
 export default function Supplies() {
 
+  //for current date in form today's date
+const d = new Date();
+var date = d.getDate() + 1;
+var month = d.getMonth() + 1;
+var year = d.getUTCFullYear();
+
+if (date < 10) {
+  date = '0' + date;
+}
+
+if (month < 10) {
+  month = '0' + month;
+}
+
+var currDate = year + '-' + month + '-' + date;
+console.log(currDate);
+
+// 1 month after current date
+  var newMonth = parseInt(month) + 1;
+  if (newMonth < 10) {
+    newMonth = '0' + newMonth;
+  }
+console.log(newMonth);
+
+var oneMonthDate = year + '-' + newMonth + '-' + date;
+console.log(oneMonthDate);
+
+
+
   const [user, setuser] = useState({
     supplyName : "",
     dateofSupply: "",
@@ -14,7 +43,7 @@ export default function Supplies() {
 
     useEffect(() => { getInventory() }, []);
 
-    //get details of user's appointment
+    //get details of user's inventory
   const getInventory = () => {
     fetch("/getInventory", {
       method: "GET",
@@ -110,7 +139,7 @@ export default function Supplies() {
       </div>
       <div className="form-group">
         <label htmlFor="supplyDate">Date of Supplies:</label>
-        <input type="date" className="form-control" id="supplyDate" max="2023-05-30" min="2023-04-15" name="dateofSupply" onChange={handleInput} required />
+        <input type="date" className="form-control" id="supplyDate" max={oneMonthDate} min={currDate} name="dateofSupply" onChange={handleInput} required />
       </div>
       <div className="form-group">
         <label htmlFor="supplyQuantity">Quantity (in kg):</label>
@@ -131,8 +160,8 @@ export default function Supplies() {
           <th>Date of Supplies</th>
           <th>Quantity (in kg)</th>
           <th>Price per kg</th>
-          <th>Total Cost (₹)</th>
-          <th>Action</th>
+          {/* <th>Total Cost (₹)</th> */}
+          {/* <th>Action</th> */}
         </tr>
       </thead>
       <tbody>
@@ -142,7 +171,7 @@ export default function Supplies() {
             <td>{supply.dateofSupply}</td>
             <td>{supply.quantity}</td>
             <td>{supply.price}</td>
-            <td>{supply.totalCost}</td>
+            {/* <td>{supply.totalCost}</td> */}
             {/* <td><button className="btn btn-danger" onClick={() => handleDelete(index)}>Delete</button></td> */}
           </tr>
         ))}

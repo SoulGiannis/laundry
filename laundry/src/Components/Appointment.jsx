@@ -3,6 +3,31 @@ import { Button, Form, FormGroup } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 
 export default function Appointment() {
+
+//for current date in form today's date
+const d = new Date();
+var date = d.getDate() + 1;
+var month = d.getMonth() + 1;
+var year = d.getUTCFullYear();
+
+if (date < 10) {
+  date = '0' + date;
+}
+
+if (month < 10) {
+  month = '0' + month;
+}
+
+var currDate = year + '-' + month + '-' + date;
+
+// 1 month after current date
+  var newMonth = parseInt(month) + 1;
+  if (newMonth < 10) {
+    newMonth = '0' + newMonth;
+  }
+
+var oneMonthDate = year + '-' + newMonth + '-' + date;
+
   
 
 const [user, setuser] = useState({
@@ -111,12 +136,12 @@ const [user, setuser] = useState({
           </div>
           <div className="form-group">
             <label for="pickup-date">Pickup Date</label>
-            <input type="date" className="form-control" id="pickup-date"  name="pickupDate" max="2023-05-30" min="2023-04-15" onChange={handleInput}  required />
+            <input type="date" className="form-control" id="pickup-date" name="pickupDate" max={oneMonthDate}  min={currDate}  onChange={handleInput}  required />
             <br />
           </div>
           <div className="form-group">
             <label for="delivery-date">Delivery Date</label>
-            <input type="date" className="form-control" id="delivery-date" name="deliveryDate" max="2023-05-30" min="2023-04-15" onChange={handleInput} required />
+            <input type="date" className="form-control" id="delivery-date" name="deliveryDate" max={oneMonthDate} min={currDate} onChange={handleInput} required />
             <br />
           </div>
           <div className="form-group">

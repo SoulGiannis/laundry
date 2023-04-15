@@ -600,6 +600,28 @@ app.get("/getBilling", async (req, res) => {
   }
 });
 
+//get reports details 
+app.get("/getReport", async (req, res) => {
+  try {
+    const allUser = await Reports.find({});
+        res.send({status:"ok", data:allUser})
+  } catch (error) {
+    console.log(error);
+    res.send(error);
+  }
+});
+
+//get orders details 
+app.get("/getOrder", async (req, res) => {
+  try {
+    const allUser = await Orders.find({});
+        res.send({status:"ok", data:allUser})
+  } catch (error) {
+    console.log(error);
+    res.send(error);
+  }
+});
+
 //get inventory details 
 app.get("/getInventory", async (req, res) => {
   try {
