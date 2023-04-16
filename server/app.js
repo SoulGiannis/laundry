@@ -40,6 +40,8 @@ const Reports = require('./models/reportSchema');
 const Message = require('./models/msgSchema');
 const { users } = require('moongose/models');
 const authenticate = require('./middleware/authenticate');
+// const pdfService = require('./generatePDF.js');
+const generatePDF = require('./generatePDF');
 // const User = require('./models/userSchema');
 
 
@@ -807,6 +809,27 @@ app.post("/sendMailMsg", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(400).send({ status: "error", data: "unable to send mail" });
+  }
+});
+
+//invoice pdf receipt generate
+// app.get('/invoice', (req, res) => {
+//   const stream = res.writeHead(200, {
+//     'Content-Type': 'application/pdf',
+//     'Content-Disposition':'attachment;filename=invoice.pdf'
+//   })
+//   pdfService.buildPDF(
+//     (chunk) => stream.write(chunk),
+//     () => stream.end()
+//   ) 
+// })
+app.post('/invoice', async (req, res) => {
+  try {
+    await generatePDF(req.body);
+    res.sendFile(__dirname + '/user-details.pdf');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
   }
 });
 

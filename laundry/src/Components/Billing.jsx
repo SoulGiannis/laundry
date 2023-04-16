@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Container, Row, Col, Form, Table, Button } from 'react-bootstrap';
 import './style.css';
+import axios from 'axios';
 
 export default function Billing() {
   const [user, setuser] = useState({
@@ -60,13 +61,35 @@ export default function Billing() {
       console.log(error);
     }
   }
-
-
+  var name;
+  var quantity;
+  var price;
+  items.map((item) => {
+    name = item.itemName;
+    quantity = item.quantity;
+    price = item.price;
+    return price
+  })
   //print bill function
-  const handlePrint = (e) => {
-    e.preventDefault();
-    return e;
-  }
+  const handlePrint = async () => {
+    const response = await axios.post('/invoice', {
+      username: name,
+      quantity: quantity,
+      price: price,
+
+    }, {
+      responseType: 'blob',
+    });
+
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'user-details.pdf');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <Container className="bill-generator">
          <div>
@@ -162,7 +185,7 @@ export default function Billing() {
       <Button onClick={handlePrint} align='right' className='mx-2'>Print Bill</Button>
       {/* <Button variant="danger" type="reset" onClick={handleReset}>
         Reset
-      </Button> */}
+      </Button> */} 
       <br />
       <br />
       <br />
