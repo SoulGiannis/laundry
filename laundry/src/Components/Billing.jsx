@@ -76,6 +76,7 @@ export default function Billing() {
       username: name,
       quantity: quantity,
       price: price,
+      total: price,
 
     }, {
       responseType: 'blob',

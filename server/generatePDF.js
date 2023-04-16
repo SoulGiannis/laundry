@@ -25,6 +25,8 @@ function generatePDF(user) {
   doc.fontSize(16).text(`Quantity (kg): ${user.quantity}`);
   doc.moveDown();
   doc.fontSize(16).text(`Price (Rupee): ${user.price}`);
+  doc.moveDown();
+  doc.fontSize(16).text(`Total (Rupee): ${user.total}`);
 
   doc.end();
 
