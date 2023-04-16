@@ -349,10 +349,10 @@ app.post("/appointment", async (req, res) => {
       return res.status(400).send({ status: "error", data: "Token not found" });
     }
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
-    const useremail = decoded._id;
+    const userId = decoded._id;
 
     // Find user by ID
-    const user = await Users.findById({_id:useremail});
+    const user = await Users.findById({_id:userId});
     if (!user) {
       return res.status(400).send({ status: "error", data: "User not found" });
     }
@@ -368,6 +368,7 @@ app.post("/appointment", async (req, res) => {
       deliveryAddress: req.body.deliveryAddress,
       service: req.body.service,
       additionalComment: req.body.additionalComment,
+      userId: userId,
     });
 
     // Save appointment to database
@@ -475,13 +476,13 @@ app.post("/inventory", async(req, res) => {
       return res.status(400).send({ status: "error", data: "Token not found" });
     }
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
-    const useremail = decoded._id;
+    const userId = decoded._id;
 
-    // Find user by ID
-    const user = await Users.findById({_id:useremail});
-    if (!user) {
-      return res.status(400).send({ status: "error", data: "User not found" });
-    }
+    // // Find user by ID
+    // const user = await Users.findById({_id:useremail});
+    // if (!user) {
+    //   return res.status(400).send({ status: "error", data: "User not found" });
+    // }
 
     // Create new inventory object
     const inventory = new Inventorys({
@@ -489,6 +490,7 @@ app.post("/inventory", async(req, res) => {
       dateofSupply: req.body.dateofSupply,
       quantity: req.body.quantity,
       price: req.body.price,
+      userId: userId
     });
 
     // Save inventory to database
@@ -513,13 +515,13 @@ app.post("/report", async(req, res) => {
       return res.status(400).send({ status: "error", data: "Token not found" });
     }
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
-    const useremail = decoded._id;
+    const userId = decoded._id;
 
     // Find user by ID
-    const user = await Users.findById({_id:useremail});
-    if (!user) {
-      return res.status(400).send({ status: "error", data: "User not found" });
-    }
+    // const user = await Users.findById({_id:useremail});
+    // if (!user) {
+    //   return res.status(400).send({ status: "error", data: "User not found" });
+    // }
 
     // Create new appointment object
     const report = new Reports({
@@ -527,7 +529,8 @@ app.post("/report", async(req, res) => {
       machineId: req.body.machineId,
       totalLoads: req.body.totalLoads,
       totalWeight: req.body.totalWeight,
-      totalCosts: req.body.totalCosts
+      totalCosts: req.body.totalCosts,
+      userId: userId
     });
 
     // Save appointment to database
@@ -552,19 +555,20 @@ app.post("/billing", async(req, res) => {
       return res.status(400).send({ status: "error", data: "Token not found" });
     }
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
-    const useremail = decoded._id;
+    const userId = decoded._id;
 
     // Find user by ID
-    const user = await Users.findById({_id:useremail});
-    if (!user) {
-      return res.status(400).send({ status: "error", data: "User not found" });
-    }
+    // const user = await Users.findById({_id:useremail});
+    // if (!user) {
+    //   return res.status(400).send({ status: "error", data: "User not found" });
+    // }
 
     // Create new appointment object
     const billing = new Billings({
       itemName: req.body.itemName,
       quantity: req.body.quantity,
       price: req.body.price,
+      userId: userId
     });
 
     // Save appointment to database
@@ -580,9 +584,27 @@ app.post("/billing", async(req, res) => {
   }
 })
 
-
+//appointment for staff
 app.get("/getUserStaff", async (req, res) => {
   try {
+    const allUser = await Appointments.find({});
+        res.send({status:"ok", data:allUser})
+  } catch (error) {
+    console.log(error);
+    res.send(error);
+  }
+});
+
+//appointment for ordersd
+app.get("/getAppointmentOrders", async (req, res) => {
+  try {
+    const token = req.cookies.jwt;
+    if (!token) {
+      return res.status(400).send({ status: "error", data: "Token not found" });
+    }
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    const userId = decoded._id;
+
     const allUser = await Appointments.find({});
         res.send({status:"ok", data:allUser})
   } catch (error) {
@@ -594,6 +616,13 @@ app.get("/getUserStaff", async (req, res) => {
 //get billing details 
 app.get("/getBilling", async (req, res) => {
   try {
+     // Get user ID from JWT token
+    const token = req.cookies.jwt;
+    if (!token) {
+      return res.status(400).send({ status: "error", data: "Token not found" });
+    }
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    const userId = decoded._id;
     const allUser = await Billings.find({});
         res.send({status:"ok", data:allUser})
   } catch (error) {
@@ -605,6 +634,14 @@ app.get("/getBilling", async (req, res) => {
 //get reports details 
 app.get("/getReport", async (req, res) => {
   try {
+     // Get user ID from JWT token
+    const token = req.cookies.jwt;
+    if (!token) {
+      return res.status(400).send({ status: "error", data: "Token not found" });
+    }
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    const userId = decoded._id;
+
     const allUser = await Reports.find({});
         res.send({status:"ok", data:allUser})
   } catch (error) {
@@ -627,6 +664,13 @@ app.get("/getOrder", async (req, res) => {
 //get inventory details 
 app.get("/getInventory", async (req, res) => {
   try {
+     // Get user ID from JWT token
+    const token = req.cookies.jwt;
+    if (!token) {
+      return res.status(400).send({ status: "error", data: "Token not found" });
+    }
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    const userId = decoded._id;
     const allUser = await Inventorys.find({});
         res.send({status:"ok", data:allUser})
   } catch (error) {

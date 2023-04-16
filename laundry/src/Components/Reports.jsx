@@ -81,7 +81,7 @@ const [report, setReport] = useState([])
         window.alert("Please try again");
       } else {
         window.alert("Details subbmited successfully");
-        history.push('/report'); //history.pushState();
+        getReport();
       }
     } catch (error) {
       console.log(error);
@@ -97,25 +97,7 @@ const [report, setReport] = useState([])
       <span className="navbar-toggler-icon"></span>
     </button>
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-        <li className="nav-item">
-          <NavLink className="nav-link active" aria-current="page" to="/">Home</NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink className="nav-link" to="/about">About</NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink className="nav-link" to="/services">Services</NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink className="nav-link" to="/contact">Contact US</NavLink>
-        </li>
-      </ul>
       <NavLink className="navbar-brand fs-4 mx-auto fw-bolder text-center" to="/">Rajeshwari Laundry</NavLink>
-      <NavLink to="/dashboard" className="btn btn-outline-primary ms-auto px-4 rounded-pill" >
-    <i className="fa fa-user-plus me-2"></i>Dashboard</NavLink>
-    <NavLink to="/appointment" className="btn btn-outline-primary ms-2 px-4 rounded-pill" >
-    <i className="fa fa-calendar me-2"></i>Appointment</NavLink>
     <NavLink to="/logout" className="btn btn-outline-primary ms-2 px-4 rounded-pill" >
     <i className="fa fa-sign-out me-2"></i>Logout</NavLink>
     </div>

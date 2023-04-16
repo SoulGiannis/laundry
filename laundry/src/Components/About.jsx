@@ -13,7 +13,7 @@ export default function About() {
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
         <li className="nav-item">
-          <NavLink className="nav-link active" aria-current="page" to="/">Home</NavLink>
+          <NavLink className="nav-link active" aria-current="page" to="/home">Home</NavLink>
         </li>
         <li className="nav-item">
           <NavLink className="nav-link" to="/contact">Contact US</NavLink>
@@ -23,8 +23,6 @@ export default function About() {
         </li>
       </ul>
       <NavLink className="navbar-brand fs-4 mx-auto fw-bolder text-center" to="/">Rajeshwari Laundry</NavLink>
-      <NavLink to="/dashboard" className="btn btn-outline-primary ms-auto px-4 rounded-pill" >
-    <i className="fa fa-user-plus me-2"></i>Dashboard</NavLink>
     <NavLink to="/appointment" className="btn btn-outline-primary ms-2 px-4 rounded-pill" >
     <i className="fa fa-calendar me-2"></i>Appointment</NavLink>
     <NavLink to="/logout" className="btn btn-outline-primary ms-2 px-4 rounded-pill" >

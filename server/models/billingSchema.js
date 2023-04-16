@@ -13,6 +13,9 @@ const billingSchema = new mongoose.Schema({
         type:Number,
         required: true
     },
+    userId: {
+        type:String,
+    }
 })
 const Billings = new mongoose.model("billing", billingSchema)
 module.exports = Billings

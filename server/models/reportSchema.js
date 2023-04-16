@@ -21,6 +21,9 @@ const reportSchema = new mongoose.Schema({
         type:Number,
         required: true
     },
+    userId: {
+        type:String,
+    },
 })
 const Reports = new mongoose.model("report", reportSchema)
 module.exports = Reports

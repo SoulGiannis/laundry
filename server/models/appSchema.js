@@ -4,15 +4,12 @@ const mongoose = require("mongoose");
 const appSchema = new mongoose.Schema({
   name: {
     type: String,
-    unique: true,
   },
   phone: {
     type: Number,
-    unique: true,
   },
   email: {  
     type: String,
-    unique: true,
   },
   pickupDate: {
     type: Date,
@@ -36,7 +33,10 @@ const appSchema = new mongoose.Schema({
   },
   additionalComment: {
     type: String,
-  }
+  },
+  userId: {
+    type:String,
+  },
 });
 
 const Appointments = mongoose.model("appointment", appSchema);

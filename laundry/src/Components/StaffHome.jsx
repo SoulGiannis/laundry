@@ -23,7 +23,7 @@ const StaffHome = () => {
   useEffect(() => { getStaffBilling() }, []);
 
 
-  //set reply form details
+  //set f form details
   const replyMessage = (e) => {
     setMessage(e.target.value);
   }

@@ -55,8 +55,8 @@ export default function Billing() {
         window.alert("Please try again");
       } else {
         window.alert("Details subbmited successfully");
-        history.push('/appointment'); //history.pushState();
       }
+      getBilling(); 
     } catch (error) {
       console.log(error);
     }
@@ -84,7 +84,7 @@ export default function Billing() {
     const url = window.URL.createObjectURL(new Blob([response.data]));
     const link = document.createElement('a');
     link.href = url;
-    link.setAttribute('download', 'user-details.pdf');
+    link.setAttribute('download', 'Rajeshwari-Laundry-Bill.pdf');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -99,25 +99,7 @@ export default function Billing() {
       <span className="navbar-toggler-icon"></span>
     </button>
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-        <li className="nav-item">
-          <NavLink className="nav-link active" aria-current="page" to="/">Home</NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink className="nav-link" to="/about">About</NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink className="nav-link" to="/services">Services</NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink className="nav-link" to="/contact">Contact US</NavLink>
-        </li>
-      </ul>
       <NavLink className="navbar-brand fs-4 mx-auto fw-bolder text-center" to="/">Rajeshwari Laundry</NavLink>
-      <NavLink to="/dashboard" className="btn btn-outline-primary ms-auto px-4 rounded-pill" >
-    <i className="fa fa-user-plus me-2"></i>Dashboard</NavLink>
-    <NavLink to="/appointment" className="btn btn-outline-primary ms-2 px-4 rounded-pill" >
-    <i className="fa fa-calendar me-2"></i>Appointment</NavLink>
     <NavLink to="/logout" className="btn btn-outline-primary ms-2 px-4 rounded-pill" >
     <i className="fa fa-sign-out me-2"></i>Logout</NavLink>
     </div>
@@ -125,7 +107,7 @@ export default function Billing() {
 </nav>
     </div>
       <br />
-      <h4>Back to Dashboard</h4>
+      {/* <h4>Back to Dashboard</h4> */}
       {/* <button onClick={handleBack} className="fa fa-backward btn btn-outline-primary ms-2 px-4 rounded-pill"></button> */}
       <br />
       <h1 align='center'>Add Items</h1>

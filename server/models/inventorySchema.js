@@ -17,6 +17,12 @@ const inventorySchema = new mongoose.Schema({
         type:Number,
         required: true
     },
+    user: {
+        type:String,
+    },
+    userId: {   
+        type:String,
+    }
 })
 const Inventorys = new mongoose.model("inventory", inventorySchema)
 module.exports = Inventorys

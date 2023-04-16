@@ -11,23 +11,7 @@ export default function Dashboard() {
       <span className="navbar-toggler-icon"></span>
     </button>
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-        <li className="nav-item">
-          <NavLink className="nav-link active" aria-current="page" to="/">Home</NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink className="nav-link" to="/about">About</NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink className="nav-link" to="/services">Services</NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink className="nav-link" to="/contact">Contact US</NavLink>
-        </li>
-      </ul>
       <NavLink className="navbar-brand fs-4 mx-auto fw-bolder text-center" to="/">Rajeshwari Laundry</NavLink>
-    <NavLink to="/appointment" className="btn btn-outline-primary ms-2 px-4 rounded-pill" >
-    <i className="fa fa-calendar me-2"></i>Appointment</NavLink>
     <NavLink to="/logout" className="btn btn-outline-primary ms-2 px-4 rounded-pill" >
     <i className="fa fa-sign-out me-2"></i>Logout</NavLink>
     </div>
@@ -78,6 +62,16 @@ export default function Dashboard() {
                   <h5 className="card-title">Billing</h5>
                   <p className="card-text">View and manage your billing information</p>
                   <NavLink to="/billing" className="btn btn-outline-primary rounded">Billing Page</NavLink>
+                  {/* <a href="#" className="btn btn-outline-primary">View Billing</a> */}
+                </div>
+              </div>
+            </div>
+            <div className="col-md-6">
+              <div className="card">
+                <div className="card-body">
+                  <h5 className="card-title">Query</h5>
+                  <p className="card-text">View and manage your Query form user</p>
+                  <NavLink to="/query" className="btn btn-outline-primary rounded">query</NavLink>
                   {/* <a href="#" className="btn btn-outline-primary">View Billing</a> */}
                 </div>
               </div>

@@ -20,6 +20,8 @@ import Appointment from './Components/Appointment';
 import AdminHome from './Components/AdminHome';
 import StaffHome from './Components/StaffHome';
 import UserDetails from './Components/UserDetails';
+import PublicHome from './Components/PublicHome';
+import Query from './Components/Query';
 
 
 function App() {
@@ -63,7 +65,9 @@ function App() {
       {/* <Dashboard/> */}
       {/* <Navbar/> */}
       <Switch>
-        <Route exact path='/' component={Home}/>
+        <Route exact path='/' component={PublicHome}/>
+        <Route exact path='/home' component={Home}/>
+        <Route exact path='/query' component={Query}/>
         <Route exact path='/about' component={About}/>
         <Route exact path='/services' component={Services}/>
         <Route exact path='/contact' component={Contact}/>

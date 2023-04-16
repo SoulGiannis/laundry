@@ -27,7 +27,7 @@ export default function UserDetails() {
     .then((data) => {
       console.log(data, "userData");
       if (data.data.userType === "staff") {
-        window.location.href = "/staffhome";
+        window.location.href = "/dashboard";
       }
       if (data.data.userType === "admin") {
         setAdmin(true);
