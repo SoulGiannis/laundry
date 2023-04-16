@@ -7,12 +7,20 @@ const StaffHome = () => {
   const [admin, setAdmin] = useState();
   const [userData, setUserData] = useState([]);
   const [userStaffMsgData, setUserStaffMsgData] = useState([]);
+  const [userSaffReportData, setUserSaffReportData] = useState([]);
+  const [userStaffBillingData, setUserStaffBillingData] = useState([]);
+  const [userStaffOrderData, setUserStaffOrderData] = useState([]);
+  const [userStaffInventoryData, setUserStaffInventoryData] = useState([]);
   const [message, setMessage] = useState(" ");
   const [staff, setStaff] = useState([]);
   const [collection, setCollection] = useState([]);
 
   useEffect(() => { getStaffUser() }, []);
   useEffect(() => { getStaffMsg() }, []);
+  useEffect(() => { getStaffOrder() }, []);
+  useEffect(() => { getStaffReport() }, []);
+  useEffect(() => { getStaffInventory() }, []);
+  useEffect(() => { getStaffBilling() }, []);
 
 
   //set reply form details
@@ -33,6 +41,51 @@ const StaffHome = () => {
       });
   }
 
+
+  //get details of user's contactus (messsage)
+  const getStaffOrder = () => {
+    fetch("/getStaffOrder", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "userData");
+        setUserStaffOrderData(data.data);
+      });
+  }
+  //get details of user's contactus (messsage)
+  const getStaffReport = () => {
+    fetch("/getStaffReport", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "userData");
+        setUserSaffReportData(data.data);
+      });
+  }
+  //get details of user's contactus (messsage)
+  const getStaffInventory = () => {
+    fetch("/getStaffInventory", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "userData");
+        setUserStaffInventoryData(data.data);
+      });
+  }
+  //get details of user's contactus (messsage)
+  const getStaffBilling = () => {
+    fetch("/getStaffBilling", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "userData");
+        setUserStaffBillingData(data.data);
+      });
+  }
   //get details of user's contactus (messsage)
   const getStaffMsg = () => {
     fetch("/getUserMsg", {
@@ -197,6 +250,10 @@ const StaffHome = () => {
         console.log(data, "userData");
         alert(data.data);
         getStaffMsg();
+        getStaffOrder()
+        getStaffInventory()
+        getStaffBilling()
+        getStaffReport()
       });
   }
 };
@@ -219,8 +276,8 @@ const StaffHome = () => {
   </div>
 </nav>
     </div>
+      <h1>Customer Appointments</h1>   
     <div className='center'>
-         
       <table className='size' style={{border:"1px solid black"}}>
         <thead>
           <tr style={{border:"2px solid black"}}>
@@ -260,6 +317,7 @@ const StaffHome = () => {
       </table>
       </div>
 
+    {/* message of contactus */}
       <h1>Customer Query</h1>
            <table className='size' style={{border:"1px solid black"}}>
         <thead>
@@ -286,7 +344,123 @@ const StaffHome = () => {
           })} 
         </tbody>
       </table>
+
+    {/* message of Inventory */}
+      <h1>Customer Inventory</h1>
+           <table className='size' style={{border:"1px solid black"}}>
+        <thead>
+          <tr style={{border:"2px solid black"}}>
+            <th className='heading' style={{border:"2px solid black"}}>name</th>
+            <th className='heading' style={{border:"2px solid black"}}>Date</th>
+            <th className='heading' style={{border:"2px solid black"}}>Quantity</th>
+            <th className='heading' style={{border:"2px solid black"}}>Price</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {userStaffInventoryData.map((i, key) => {
+            return (
+              <tr key={key}>
+                <td style={{ border: "2px solid black" }}>{i.supplyName}</td>
+                <td style={{ border: "2px solid black" }}>{i.dateofSupply}</td>
+                <td style={{ border: "2px solid black" }}>{i.quantity}</td>  
+                <td style={{ border: "2px solid black" }}>{i.price}</td>  
+              </tr>
+            )
+          })} 
+        </tbody>
+      </table>
+
+    {/* message of Order */}
+      <h1>Customer Order</h1>
+           <table className='size' style={{border:"1px solid black"}}>
+        <thead>
+          <tr style={{border:"2px solid black"}}>
+            <th className='heading' style={{border:"2px solid black"}}>name</th>
+            <th className='heading' style={{border:"2px solid black"}}>email</th>
+            <th className='heading' style={{border:"2px solid black"}}>phone</th>
+            <th className='heading' style={{border:"2px solid black"}}>services</th>
+            <th className='heading' style={{border:"2px solid black"}}>weight</th>
+            <th className='heading' style={{border:"2px solid black"}}>pickup date</th>
+            <th className='heading' style={{border:"2px solid black"}}>pickup time</th>
+            <th className='heading' style={{border:"2px solid black"}}>delivery date</th>
+            <th className='heading' style={{border:"2px solid black"}}>delivery time</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {userStaffOrderData.map((i, key) => {
+            return (
+              <tr key={key}>
+                <td style={{ border: "2px solid black" }}>{i.name}</td>
+                <td style={{ border: "2px solid black" }}>{i.email}</td>
+                <td style={{ border: "2px solid black" }}>{i.phone}</td>  
+                <td style={{ border: "2px solid black" }}>{i.services}</td>  
+                <td style={{ border: "2px solid black" }}>{i.weight}</td>  
+                <td style={{ border: "2px solid black" }}>{i.pickupDate}</td>  
+                <td style={{ border: "2px solid black" }}>{i.pickupTime}</td>  
+                <td style={{ border: "2px solid black" }}>{i.deliveryDate}</td>  
+                <td style={{ border: "2px solid black" }}>{i.deliveryTime}</td>  
+              </tr>
+            )
+          })} 
+        </tbody>
+      </table>
+
+    {/* message of Billing */}
+      <h1>Customer Billing</h1>
+           <table className='size' style={{border:"1px solid black"}}>
+        <thead>
+          <tr style={{border:"2px solid black"}}>
+            <th className='heading' style={{border:"2px solid black"}}>name</th>
+            <th className='heading' style={{border:"2px solid black"}}>quantity</th>
+            <th className='heading' style={{border:"2px solid black"}}>price</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {userStaffBillingData.map((i, key) => {
+            return (
+              <tr key={key}>
+                <td style={{ border: "2px solid black" }}>{i.itemName}</td>
+                <td style={{ border: "2px solid black" }}>{i.quantity}</td>
+                <td style={{ border: "2px solid black" }}>{i.price}</td>  
+              </tr>
+            )
+          })} 
+        </tbody>
+      </table>
       
+    {/* message of Report */}
+      <h1>Customer Report</h1>
+           <table className='size' style={{border:"1px solid black"}}>
+        <thead>
+          <tr style={{border:"2px solid black"}}>
+            <th className='heading' style={{border:"2px solid black"}}>date</th>
+            <th className='heading' style={{border:"2px solid black"}}>machineId</th>
+            <th className='heading' style={{border:"2px solid black"}}>total loads</th>
+            <th className='heading' style={{border:"2px solid black"}}>total weight</th>
+            <th className='heading' style={{border:"2px solid black"}}>total costs</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {userSaffReportData.map((i, key) => {
+            return (
+              <tr key={key}>
+                <td style={{ border: "2px solid black" }}>{i.date}</td>
+                <td style={{ border: "2px solid black" }}>{i.machineId}</td>
+                <td style={{ border: "2px solid black" }}>{i.totalLoads}</td>  
+                <td style={{ border: "2px solid black" }}>{i.totalWeight}</td>  
+                <td style={{ border: "2px solid black" }}>{i.totalCosts}</td>  
+              </tr>
+            )
+          })} 
+        </tbody>
+      </table>
+      
+      
+
       <br/>
       <br/>
       <br/>

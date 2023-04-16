@@ -61,6 +61,12 @@ export default function Billing() {
     }
   }
 
+
+  //print bill function
+  const handlePrint = (e) => {
+    e.preventDefault();
+    return e;
+  }
   return (
     <Container className="bill-generator">
          <div>
@@ -151,16 +157,10 @@ export default function Billing() {
             </tr>
           ))}
         </tbody>
-        {/* <tfoot> */}
-          {/* <tr> */}
-            {/* <td colSpan="3">Total Cost:</td> */}
-            {/* <td>{totalCost} ₹</td> */}
-          {/* </tr> */}
-        {/* </tfoot> */}
       </Table>
       <br />
-      {/* <Button onClick={handlePrint} align='right' className='mx-2'>Print Bill</Button>
-      <Button variant="danger" type="reset" onClick={handleReset}>
+      <Button onClick={handlePrint} align='right' className='mx-2'>Print Bill</Button>
+      {/* <Button variant="danger" type="reset" onClick={handleReset}>
         Reset
       </Button> */}
       <br />

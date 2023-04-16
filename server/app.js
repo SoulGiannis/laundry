@@ -644,6 +644,50 @@ app.get("/getUserMsg", async (req, res) => {
   }
 });
 
+//get Order at staff site
+app.get("/getStaffOrder", async (req, res) => {
+  try {
+    const allUser = await Orders.find({});
+        res.send({status:"ok", data:allUser})
+  } catch (error) {
+    console.log(error);
+    res.send(error);
+  }
+});
+
+//get Order at staff site
+app.get("/getStaffReport", async (req, res) => {
+  try {
+    const allUser = await Reports.find({});
+        res.send({status:"ok", data:allUser})
+  } catch (error) {
+    console.log(error);
+    res.send(error);
+  }
+});
+
+//get Order at staff site
+app.get("/getStaffInventory", async (req, res) => {
+  try {
+    const allUser = await Inventorys.find({});
+        res.send({status:"ok", data:allUser})
+  } catch (error) {
+    console.log(error);
+    res.send(error);
+  }
+});
+
+//get Order at staff site
+app.get("/getStaffBilling", async (req, res) => {
+  try {
+    const allUser = await Billings.find({});
+        res.send({status:"ok", data:allUser})
+  } catch (error) {
+    console.log(error);
+    res.send(error);
+  }
+});
+
 //sending mail to approved user
 const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
 oAuth2Client.setCredentials({refresh_token:REFRESH_TOKEN})

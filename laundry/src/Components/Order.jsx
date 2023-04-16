@@ -161,7 +161,7 @@ console.log(oneMonthDate);
                       </div>
                       <div className="form-group">
                           <label htmlFor="pickup-time">Pickup Time</label>
-                          <input type="time" id="pickup-time" onChange={handleInput} min="10:00" max="18:00"  name="pickupTime" required/>
+                          <input type="time" id="pickup-time" onChange={handleInput} name="pickupTime" required/>
                       </div>
                       <div className="form-group">
                           <label htmlFor="delivery-date">Delivery Date</label>
@@ -169,7 +169,7 @@ console.log(oneMonthDate);
                       </div>
                       <div className="form-group">
                           <label htmlFor="delivery-time">Delivery Time</label>
-                          <input type="time" id="delivery-time"  onChange={handleInput} min="10:00" max="18:00"  name="deliveryTime" required/>
+                          <input type="time" id="delivery-time"  onChange={handleInput}  name="deliveryTime" required/>
                             </div>
                             <button type="submit" className="btn btn-outline-primary">Submit Request</button>
                       </form>
