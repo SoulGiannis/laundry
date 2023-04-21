@@ -81,7 +81,6 @@ function App() {
         <ProtectedRoute exact path='/supplies' component={Supplies} auth={auth1} />
         <ProtectedRoute exact path='/order' component={Order} auth={auth1} />
         <ProtectedRoute exact path='/billing' component={Billing} auth={auth1} />
-        <ProtectedRoute exact path='/reports' component={Reports} auth={auth1} />
         <ProtectedRoute exact path='/appointment' component={Appointment} auth={auth1} />
       </Switch>
       {/* <Dashboard/> */}

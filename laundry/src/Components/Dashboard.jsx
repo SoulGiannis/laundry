@@ -49,16 +49,6 @@ export default function Dashboard() {
             <div className="col-md-6">
               <div className="card">
                 <div className="card-body">
-                  <h5 className="card-title">Report</h5>
-                  <p className="card-text">View and generate reports</p>
-                  <NavLink to="/reports" className="btn btn-outline-primary rounded">Reports</NavLink>
-                  {/* <a href="#" className="btn btn-outline-primary">View Reports</a> */}
-                </div>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="card">
-                <div className="card-body">
                   <h5 className="card-title">Billing</h5>
                   <p className="card-text">View and manage your billing information</p>
                   <NavLink to="/billing" className="btn btn-outline-primary rounded">Billing Page</NavLink>
