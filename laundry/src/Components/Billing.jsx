@@ -100,7 +100,7 @@ export default function Billing() {
       <span className="navbar-toggler-icon"></span>
     </button>
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
-      <NavLink className="navbar-brand fs-4 mx-auto fw-bolder text-center" to="/">Rajeshwari Laundry</NavLink>
+      <NavLink className="navbar-brand fs-4 mx-auto fw-bolder text-center" to="/home">Rajeshwari Laundry</NavLink>
     <NavLink to="/logout" className="btn btn-outline-primary ms-2 px-4 rounded-pill" >
     <i className="fa fa-sign-out me-2"></i>Logout</NavLink>
     </div>

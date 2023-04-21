@@ -25,7 +25,7 @@
           <NavLink className="nav-link" to="/contact">Contact US</NavLink>
         </li>
       </ul>
-      <NavLink className="navbar-brand fs-4 mx-auto fw-bolder text-center" to="/">Rajeshwari Laundry</NavLink>
+      <NavLink className="navbar-brand fs-4 mx-auto fw-bolder text-center" to="/home">Rajeshwari Laundry</NavLink>
     <NavLink to="/appointment" className="btn btn-outline-primary ms-2 px-4 rounded-pill" >
     <i className="fa fa-calendar me-2"></i>Appointment</NavLink>
     <NavLink to="/logout" className="btn btn-outline-primary ms-2 px-4 rounded-pill" >
