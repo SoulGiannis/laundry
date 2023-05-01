@@ -55,7 +55,7 @@ const AdminHome = () => {
     <NavLink to="/logout" className="btn btn-outline-primary ms-2 px-4 rounded-pill" >
     <i className="fa fa-sign-out me-2"></i>Logout</NavLink>
     </div>
-  </div>s
+  </div>
 </nav>
     </div>
     <div className='center'>
@@ -79,7 +79,21 @@ const AdminHome = () => {
           
         }
       </table>
-    </div>
+      </div>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
     </div>
   )
 }

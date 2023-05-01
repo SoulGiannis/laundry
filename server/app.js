@@ -865,18 +865,68 @@ app.post("/sendMailMsg", async (req, res) => {
 //   pdfService.buildPDF(
 //     (chunk) => stream.write(chunk),
 //     () => stream.end()
-//   ) 
+//   )
 // })
-app.post('/invoice', async (req, res) => {
+// app.post('/invoice', async (req, res) => {
+//   try {
+//     await generatePDF(req.body);
+//     res.sendFile(__dirname + '/user-details.pdf');
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send('Server error');
+//   }
+// });
+
+// app.post('/invoice', async (req, res) => {
+//   try {
+//     const users = req.body;
+//     await generatePDF(users);
+//     res.sendFile(__dirname + '/user-details.pdf');
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send('Server error');
+//   }
+// });
+const PDFDocument = require('pdfkit');
+const fs = require('fs');
+app.get('/pdf', async (req, res) => {
   try {
-    await generatePDF(req.body);
-    res.sendFile(__dirname + '/user-details.pdf');
+    const users = await Billings.find({});
+    const doc = new PDFDocument();
+    const stream = fs.createWriteStream('user-details.pdf');
+
+    doc.pipe(stream);
+    doc.fontSize(20).text('Rajeshwari Laundry Bill', { align: 'center' });
+
+    let total = 0;
+    users.forEach((user) => {
+      doc.moveDown();
+      doc.fontSize(16).text(`Item Name: ${user.itemName}`);
+      doc.moveDown();
+      doc.fontSize(16).text(`Quantity (kg): ${user.quantity}`);
+      doc.moveDown();
+      doc.fontSize(16).text(`Price (Rupee): ${user.price}`);
+      total += user.price;
+    });
+
+    doc.moveDown();
+    doc.fontSize(16).text(`Total (Rupee): ${total}`);
+
+    doc.end();
+
+    stream.on('finish', () => {
+      res.download('user-details.pdf');
+    });
+
+    stream.on('error', (err) => {
+      console.log(err);
+      res.status(500).send({ error: 'Error generating PDF' });
+    });
   } catch (err) {
-    console.error(err);
-    res.status(500).send('Server error');
+    console.log(err);
+    res.status(500).send({ error: 'Error generating PDF' });
   }
 });
-
 
 //Logout Page
 app.get('/logout', (req,res)=>{

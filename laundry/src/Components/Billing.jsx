@@ -71,25 +71,42 @@ export default function Billing() {
     return price
   })
   //print bill function
+  // const handlePrint = async () => {
+  //   const response = await axios.post('/invoice', {
+  //     username: name,
+  //     quantity: quantity,
+  //     price: price,
+  //     total: price,
+
+  //   }, {
+  //     responseType: 'blob',
+  //   });
+
+  //   const url = window.URL.createObjectURL(new Blob([response.data]));
+  //   const link = document.createElement('a');
+  //   link.href = url;
+  //   link.setAttribute('download', 'Rajeshwari-Laundry-Bill.pdf');
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
+
   const handlePrint = async () => {
-    const response = await axios.post('/invoice', {
-      username: name,
-      quantity: quantity,
-      price: price,
-      total: price,
-
-    }, {
-      responseType: 'blob',
-    });
-
-    const url = window.URL.createObjectURL(new Blob([response.data]));
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', 'Rajeshwari-Laundry-Bill.pdf');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    try {
+      const res = await axios.get('/pdf', {
+        responseType: 'blob',
+      });
+      const url = window.URL.createObjectURL(new Blob([res.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'invoice.pdf');
+      document.body.appendChild(link);
+      link.click();
+    } catch (err) {
+      console.log(err);
+    }
   };
+
 
   return (
     <Container className="bill-generator">

@@ -13,26 +13,32 @@
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
 
-function generatePDF(user) {
+function generatePDF(users) {
   const doc = new PDFDocument();
   const stream = fs.createWriteStream('user-details.pdf');
 
   doc.pipe(stream);
   doc.fontSize(20).text('Rajeshwari Laundry Bill', { align: 'center' });
+
+  let total = 0;
+  users.forEach((user) => {
+    doc.moveDown();
+    doc.fontSize(16).text(`Item Name: ${user.username}`);
+    doc.moveDown();
+    doc.fontSize(16).text(`Quantity (kg): ${user.quantity}`);
+    doc.moveDown();
+    doc.fontSize(16).text(`Price (Rupee): ${user.price}`);
+    total += user.price;
+  });
+
   doc.moveDown();
-  doc.fontSize(16).text(`Item Name: ${user.username}`);
-  doc.moveDown();
-  doc.fontSize(16).text(`Quantity (kg): ${user.quantity}`);
-  doc.moveDown();
-  doc.fontSize(16).text(`Price (Rupee): ${user.price}`);
-  doc.moveDown();
-  doc.fontSize(16).text(`Total (Rupee): ${user.total}`);
+  doc.fontSize(16).text(`Total (Rupee): ${total}`);
 
   doc.end();
 
   return new Promise((resolve, reject) => {
     stream.on('finish', () => {
-      resolve();
+      resolve(total); // resolve the total
     });
 
     stream.on('error', (err) => {
@@ -40,5 +46,6 @@ function generatePDF(user) {
     });
   });
 }
+  
 
 module.exports = generatePDF;
