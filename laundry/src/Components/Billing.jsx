@@ -4,6 +4,15 @@ import { Container, Row, Col, Form, Table, Button } from 'react-bootstrap';
 import './style.css';
 import axios from 'axios';
 
+
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+library.add(faTrash);
+
+
 export default function Billing() {
   const [user, setuser] = useState({
     itemName : "",
@@ -108,6 +117,29 @@ export default function Billing() {
   };
 
 
+  //delete billings
+  const deleteBillings = (_id) => {
+    if (window.confirm(`Delete billing detail`)) {
+      fetch("/deleteBillling", {
+        method: "POST",
+        crossDomain: true,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          id: _id,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data, "userData");
+          alert(data.data);
+          getBilling();
+        });
+    }
+  }
   return (
     <Container className="bill-generator">
          <div>
@@ -169,6 +201,8 @@ export default function Billing() {
             <th>Item Name</th>
             <th>Quantity (kg)</th>
             <th>Price (₹):</th>
+            <th>Total Price (₹):</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -177,6 +211,10 @@ export default function Billing() {
               <td>{item.itemName}</td>
               <td>{item.quantity}</td>
               <td>{item.price}</td>
+              <td>{item.price * item.quantity}</td>
+              <td onClick={()=>deleteBillings(item._id)} className="dlt">
+              <FontAwesomeIcon icon={faTrash} />
+            </td>
             </tr>
           ))}
         </tbody>

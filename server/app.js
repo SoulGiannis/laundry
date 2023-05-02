@@ -340,6 +340,19 @@ app.post("/deleteUserMessage", async (req, res) => {
     }
 })
 
+//delete billing from staff site
+app.post("/deleteBillling", async (req, res) => {
+    const { id } = req.body;
+    try {
+        Billings.deleteOne({ _id: id }, function (err, res) {
+            console.log(err);
+        })
+        res.send({ status: "ok", data: "deleted" })
+    } catch (error) {
+        res.send(error)
+    }
+})
+
 //Appointment
 app.post("/appointment", async (req, res) => {
   try {
@@ -906,7 +919,7 @@ app.get('/pdf', async (req, res) => {
       doc.fontSize(16).text(`Quantity (kg): ${user.quantity}`);
       doc.moveDown();
       doc.fontSize(16).text(`Price (Rupee): ${user.price}`);
-      total += user.price;
+      total += user.price * user.quantity;
     });
 
     doc.moveDown();

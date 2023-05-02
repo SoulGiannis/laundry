@@ -3,8 +3,8 @@
   import ContactHome from './ContactHome'
   import ServicesHome from './ServicesHome'
   import { NavLink } from 'react-router-dom'
-  export default function Home({username,email}) {
-      
+  export default function Home(props) {
+      const { username } = props;
     return (
       <div>
            <div>
@@ -54,4 +54,5 @@
           <ContactHome/>
       </div>
     )
-  }
+}
+  

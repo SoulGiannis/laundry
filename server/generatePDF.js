@@ -21,6 +21,7 @@ function generatePDF(users) {
   doc.fontSize(20).text('Rajeshwari Laundry Bill', { align: 'center' });
 
   let total = 0;
+  let eachTotal = 0;
   users.forEach((user) => {
     doc.moveDown();
     doc.fontSize(16).text(`Item Name: ${user.username}`);
@@ -28,11 +29,12 @@ function generatePDF(users) {
     doc.fontSize(16).text(`Quantity (kg): ${user.quantity}`);
     doc.moveDown();
     doc.fontSize(16).text(`Price (Rupee): ${user.price}`);
-    total += user.price;
+    eachTotal = user.quantity * user.price;
+    total += eachTotal;
   });
 
   doc.moveDown();
-  doc.fontSize(16).text(`Total (Rupee): ${total}`);
+  doc.fontSize(16).text(`Total (Rupee): ${eachTotal}`);
 
   doc.end();
 

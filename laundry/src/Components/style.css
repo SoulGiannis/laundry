@@ -56,3 +56,8 @@
         background-color: red;
         color:black;
     }
+    .dlt:hover{
+        background-color: rgb(198, 190, 190);
+        color: white;
+        cursor:pointer;
+    }
